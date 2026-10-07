@@ -1,0 +1,107 @@
+{
+  "name": "medusa-route-explorer",
+  "displayName": "Medusa Route Explorer",
+  "description": "Browse Medusa file-based API routes and jump to each handler.",
+  "version": "0.1.1",
+  "publisher": "stitchgrab",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stitchgrab/medusa-route-explorer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stitchgrab/medusa-route-explorer/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onView:medusaRouteExplorer"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "medusa-routes",
+          "title": "Medusa Routes",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "medusa-routes": [
+        {
+          "id": "medusaRouteExplorer",
+          "name": "API Routes",
+          "contextualTitle": "Medusa API Routes"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "medusaRoutes.refresh",
+        "title": "Refresh Medusa Routes",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "medusaRoutes.toggleGrouping",
+        "title": "Toggle Medusa Route Grouping",
+        "icon": "$(group-by-ref-type)"
+      },
+      {
+        "command": "medusaRoutes.filter",
+        "title": "Filter Medusa Routes",
+        "icon": "$(search)"
+      },
+      {
+        "command": "medusaRoutes.copyPath",
+        "title": "Copy Medusa Route",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "medusaRoutes.open",
+        "title": "Open Medusa Route"
+      },
+      {
+        "command": "medusaRoutes.goTo",
+        "title": "Medusa Routes: Go to Route"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "medusaRoutes.filter",
+          "when": "view == medusaRouteExplorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "medusaRoutes.toggleGrouping",
+          "when": "view == medusaRouteExplorer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "medusaRoutes.refresh",
+          "when": "view == medusaRouteExplorer",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "medusaRoutes.copyPath",
+          "when": "view == medusaRouteExplorer && viewItem == route",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "test": "tsc -p . && node --test out/parser.test.js",
+    "watch": "tsc -w -p ."
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.9.0"
+  }
+}
