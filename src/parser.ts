@@ -51,6 +51,19 @@ const EXPORT_RE = new RegExp(
 
 const METHOD_ORDER = new Map<string, number>(HTTP_METHODS.map((method, index) => [method, index]))
 
+const METHOD_PRESENTATION: Record<HttpMethod, { icon: string; color: string }> = {
+  GET: { icon: "eye", color: "charts.blue" },
+  POST: { icon: "add", color: "charts.green" },
+  PUT: { icon: "replace", color: "charts.orange" },
+  PATCH: { icon: "edit", color: "charts.yellow" },
+  DELETE: { icon: "trash", color: "charts.red" },
+  OPTIONS: { icon: "info", color: "charts.purple" },
+}
+
+export function methodPresentation(method: HttpMethod): { icon: string; color: string } {
+  return METHOD_PRESENTATION[method]
+}
+
 export function routePathFromFile(filePath: string): string | undefined {
   const normalized = filePath.replace(/\\/g, "/")
   const marker = "/src/api/"
