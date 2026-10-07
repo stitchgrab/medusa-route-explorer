@@ -2,7 +2,7 @@
   "name": "medusa-route-explorer",
   "displayName": "Medusa Route Explorer",
   "description": "Browse Medusa file-based API routes and jump to each handler.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "stitchgrab",
   "license": "MIT",
   "repository": {

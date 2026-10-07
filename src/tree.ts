@@ -5,6 +5,7 @@ import {
   RouteTreeNode,
   buildRouteTree,
   filterRoutes,
+  methodPresentation,
   parseRouteFile,
   routeLabel,
 } from "./parser"
@@ -27,7 +28,8 @@ export class MedusaRouteItem extends vscode.TreeItem {
       this.contextValue = "route"
       this.description = vscode.workspace.asRelativePath(route.file)
       this.tooltip = `${routeLabel(route)}\n${this.description}:${route.line}`
-      this.iconPath = new vscode.ThemeIcon(iconForMethod(route.method))
+      const presentation = methodPresentation(route.method)
+      this.iconPath = new vscode.ThemeIcon(presentation.icon, new vscode.ThemeColor(presentation.color))
       this.command = {
         command: "medusaRoutes.open",
         title: "Open Route",
@@ -151,19 +153,3 @@ export function statusMessage(routeCount: number, filter: string, groupBy: Group
   return `${routeCount} route${routeCount === 1 ? "" : "s"} · ${grouping}${filterText}`
 }
 
-function iconForMethod(method: ApiRoute["method"]): string {
-  switch (method) {
-    case "GET":
-      return "arrow-circle-down"
-    case "POST":
-      return "add"
-    case "PUT":
-      return "replace-all"
-    case "PATCH":
-      return "edit"
-    case "DELETE":
-      return "trash"
-    case "OPTIONS":
-      return "ellipsis"
-  }
-}

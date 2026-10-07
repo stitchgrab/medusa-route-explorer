@@ -7,12 +7,30 @@ import {
   buildRouteTree,
   filterRoutes,
   groupRoutes,
+  HTTP_METHODS,
+  methodPresentation,
   parseRouteFile,
   routePathFromFile,
   RouteTreeNode,
 } from "./parser"
 
 const CORE_API = path.resolve(__dirname, "../../core-api/src/api")
+
+test("picks a distinct icon for each HTTP method", () => {
+  assert.deepEqual(
+    Object.fromEntries(HTTP_METHODS.map((method) => [method, methodPresentation(method).icon])),
+    {
+      GET: "eye",
+      POST: "add",
+      PUT: "replace",
+      PATCH: "edit",
+      DELETE: "trash",
+      OPTIONS: "info",
+    }
+  )
+  const colors = HTTP_METHODS.map((method) => methodPresentation(method).color)
+  assert.equal(new Set(colors).size, colors.length)
+})
 
 test("maps route.ts folders onto URL paths", () => {
   assert.equal(routePathFromFile("/repo/src/api/route.ts"), "/")
